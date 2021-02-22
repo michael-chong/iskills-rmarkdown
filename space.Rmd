@@ -1,0 +1,51 @@
+---
+title: "Space Launches"
+author: "Michael"
+date: "19/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+```{r}
+# Import data
+launches <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-01-15/launches.csv")
+
+# Look at the data in an R Studio tab
+#View(launches)
+```
+
+```{r}
+# Code to count missions by year
+launches_by_year <- launches %>%
+  group_by(launch_year) %>%
+  count()
+
+# Plot the number of launches by year 
+# try putting this in your document without showing the code!
+ggplot(launches_by_year, aes(x = launch_year, y = n)) +
+  geom_line()
+```
+
+```{r}
+# Code to count missions from 3 most active countries 
+# Try to put this in table in a nice table without showing the code
+launches_by_country <- launches %>%
+  group_by(state_code) %>%
+  count() %>%
+  arrange(desc(n)) %>%
+  ungroup() %>%
+  slice(1:3)
+```
+
+```{r}
+# Code to count the number of launches
+# Try putting this in inline text!
+nrow(launches)
+```
+
+Try including a link to the info page to these data: https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-01-15
